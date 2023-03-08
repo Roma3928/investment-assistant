@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Главная
+{% endblock %}
+
+{% block content %}
+    <div class="container px-4 px-lg-5">
+        <div class="row">
+            <div class="col-lg-10">
+                <h1 class="mt-5 mb-4">Последние новости по дивидендам</h1>
+            {% regroup content by date as date_list %}
+
+            {% for date in date_list %}
+            <h3 >{{ date.grouper }}</h3>
+                {% for el in content %}
+                    <div class="col-lg-6">
+                        <p class="lead"><a href="{{el.url}}" style="color: black; text-decoration:none;">{{el.title}}</a></p>
+                    </div>
+                {% endfor %}
+             {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

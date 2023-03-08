@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Аналитика
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/calculator.css' %}">
+<!-- Page Content-->
+<section>
+    <div class="container px-4 px-lg-5">
+        <div class="row">
+            <div class="col-lg-10">
+                <h1 class="mt-5">Дивидендный календарь 2022</h1>
+                 <p class="lead mb-2">В календаре дивидендов мы собрали данные по предстоящим выплатам<br> российских и зарубежных компаний.</p>
+                <div class="row justify-content-center mb-2">
+                    <div class="btn-group">
+                        <a class="btn" href="{% url 'analytics' %}?exchange=Московская биржа">Московская биржа</a>
+                        <a class="btn" href="{% url 'analytics' %}?exchange=СПб биржа">СПб биржа</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-hover">
+                  <thead class="table-warning">
+                    <tr>
+                      <th scope="col">АКЦИЯ</th>
+                      <th scope="col">КУПИТЬ ДО</th>
+                      <th scope="col">РЕЕСТР</th>
+                      <th scope="col">ЦЕНА</th>
+                      <th scope="col">ЛОТ</th>
+                      <th scope="col">ДИВИДЕНДЫ</th>
+                      <th scope="col">ДОХОДНОСТЬ</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for promotion in object_list %}
+                      <tr>
+                        <th scope="row">
+                            <a href="{% url 'company-detail' promotion.company.symbol %}">{{promotion.company.name}}</a>
+                            <a target="_blank" class="btn" href="{{promotion.company.url}}" style="font-size: 8px;">{{promotion.company.symbol}}</a>
+                        </th>
+                        <td>{{promotion.buy_to}}</td>
+                        <td>{{promotion.register}}</td>
+                        <td>{{promotion.price}}</td>
+                        <td>{{promotion.lot}}</td>
+                        <td>{{promotion.dividend}}</td>
+                        <td>{{promotion.income}}</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

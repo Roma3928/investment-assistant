@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Расчет налога
+{% endblock %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'css/calculator.css' %}">
+    <!-- Page Content-->
+    <section>
+        <div class="container px-4 px-lg-5 mb-5">
+            <div class="row gx-4 gx-lg-5">
+                <div class="col-lg-6">
+                    <h1 class="mt-5">Считаем налог</h1>
+                    <p class="lead">Калькулятор рассчитает сумму налога на доход, по которому брокер не выступают налоговыми агентами.</p><br>
+                </div>
+                <form action="#" onsubmit="return false" class="mb-5">
+                    {% csrf_token %}
+                    <label class="lead mb-1">Тип дохода&nbsp&nbsp</label>
+                    <div class="col-lg-6 ">
+                        <select name="opr" class="form-control-lg mb-3" id="select">
+                            <option value="option">Выбрать / Всё спрятать</option>
+                            <option value="dividends">НДФЛ с дивидендов от иностранных компаний</option>
+                            <option value="currency">НДФЛ с курсовой разницы валют</option>
+                            <option value="metal">НДФЛ от продажи драгоценных металлов</option>
+                        </select>
+                    </div>
+                    <!--1 Дивы-->
+                    <div class="income" id="dividends">
+                        <div class="container-calcul">
+                            <div class="card-calcul" >
+                                <label class="lead mb-1">Итоговая сумма выплаты</label>
+                                <p><span class="input"><input type="text" name="sum" ><span></span></span></p>
+
+                                <label class="lead mb-1">Курс Центробанка на дату выплаты  <a href="https://www.cbr.ru/currency_base/daily/"  target="_blank"><i class="bi bi-currency-dollar"></i></a></label>
+                                <p><span class="input"><input type="text" name="rate" ><span></span></span></p>
+
+                            </div>
+
+                            <div class="card-calcul ms-5" >
+                                <label class="lead mb-1">Страна эмитента</label>
+
+                                <select name="statesel" class="select" id="sel">
+                                    <option value="option">Выберите страну</option>
+                                    {% for el in tax %}
+                                        <option value="{{ el.tax_rate }}">{{el.state}}</option>
+                                    {% endfor %}
+                                </select>
+
+                                <div class="form-check form-switch mt-4">
+                                    <label class="form-check-label fw-light" for="checkbox">Форма W-8ben</label>
+                                    <input class="form-check-input" type="checkbox" id="checkbox">
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <button type="submit" class="btn btn-dark btn-rounded px-5 mt-4" id="btn1">Рассчитать</button><br><br>
+
+                        <div class="mt-5 mb-4 headline-result">Налог</div>
+                        <p><span class="input"><input class ="colortext" type="text"  name="result1" disabled><span></span></span></p>
+                    </div>
+                    <!--2 Валюта-->
+                    <div class="income" id="currency">
+                        <div class="container-calcul">
+                            <div class="card-calcul" >
+                                <label class="lead mb-1">Сумма за продажу валюты</label>
+                                <p><span class="input"><input type="text" name="pr2" required><span></span></span></p>
+
+                                <label class="lead mb-1">Комиссия за продажу валюты</label>
+                                <p><span class="input"><input type="text" name="kpr2" required><span></span></span></p>
+                            </div>
+                            <div class="card-calcul" >
+                                <label class="lead mb-1">Сумма за покупку валюты</label>
+                                <p><span class="input"><input type="text" name="po2" required><span></span></span></p>
+
+                                <label class="lead mb-1">Комиссия за покупку валюты</label>
+                                <p><span class="input"><input type="text" name="kpo2" required><span></span></span></p><br>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark btn-rounded px-5" id="btn2">Рассчитать</button><br><br>
+
+                        <div class="mt-5 mb-4 headline-result">Налог</div>
+                        <p><span class="input"><input class ="colortext" type="text" name="result2" disabled><span></span></span></p>
+                    </div>
+                    <!--3 Метал-->
+                    <div class="income" id="metal">
+                        <div class="container-calcul">
+                            <div class="card-calcul" >
+                                <label class="lead mb-1">Сумма за продажу драгметалла</label>
+                                <p><span class="input"><input type="text" name="pr3" required><span></span></span></p>
+
+                                <label class="lead mb-1">Комиссия за продажу драгметалла</label>
+                                <p><span class="input"><input type="text" name="kpr3" required ><span></span></span></p>
+                            </div>
+                            <div class="card-calcul" >
+                                <label class="lead mb-1">Сумма за покупку драгметалла</label>
+                                <p><span class="input"><input type="text" name="po3" required><span></span></span></p>
+
+                                <label class="lead mb-1">Комиссия за покупку драгметалла</label>
+                                <p><span class="input"><input type="text" required name="kpo3" ><span></span></span></p><br>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-dark btn-rounded px-5" id="btn3">Рассчитать</button><br><br>
+
+                        <div class="mt-5 mb-4 headline-result">Налог</div>
+                        <p><span class="input"><input class ="colortext" type="text"  name="result3" disabled><span></span></span></p>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Аналитика - {{object.name}}
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/calculator.css' %}">
+<!-- Page Content-->
+<section>
+    <div class="container px-4 px-lg-5">
+        <div class="row p-4 p-md-5 mt-4 text-white rounded bg-dark">
+            <div class="col-md-6 px-0">
+              <h1 class="display-4 fst-italic">{{object.name}}</h1>
+                <a target="_blank" href="{{object.url}}">{{object.symbol}}</a>
+              <p class="lead my-3">
+
+              </p>
+            </div>
+
+            <div class="col-md-4">
+                <div class="scrollbox">
+                    <div class="scrollbox-inner">
+                        <div class="d-flex nav-scroll flex-nowrap"><div>
+                        <div class="smallcaps">Курс акций</div>
+                        <div class="d-flex align-items-center text-nowrap flex-nowrap">
+                            <div class="num150 me-2">{{object.rate}}</div>
+                        </div>
+                    </div>
+                        <div class="ms-4">
+                            <div class="smallcaps">Доходность, год</div>
+                            <div class="num150">{{object.income}}</div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row p-4 p-md-5 mt-4 text-black rounded bg-white">
+            <div class="col-md-6 px-0">
+              <h1 class="display-4 fst-italic"></h1>
+            </div>
+        </div>
+    </div>
+    <div style="height: 25rem"></div>
+</section>
+
+{% endblock %}
